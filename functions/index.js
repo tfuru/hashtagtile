@@ -9,10 +9,16 @@ const cheerio = require('cheerio');
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 exports.tweet = functions.https.onRequest((req, resp) => {
-    const tweet = req.body;
     const hashtag = req.query.hashtag;
+    const content_type = req.headers["content-type"];
+    console.log("content_type",content_type);
+    let tweet = req.body;
+    //console.log("tweet 1",tweet);
+    if(content_type === "text/plain"){
+        tweet = JSON.parse(tweet.replace(/\r?\n/g,""));
+    }
+    //console.log("tweet 2",tweet);
 
-    console.log("tweet",tweet);
     console.log("hashtag",hashtag);
     console.log("LinkToTweet",tweet.LinkToTweet);
     axios.get(tweet.LinkToTweet).then(function(response){
