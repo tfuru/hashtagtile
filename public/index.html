@@ -6,7 +6,7 @@
     <title>hashtagtile</title>
 
     <meta property="og:title" content="hashtagtile - ハッシュタグタイル -" />
-    <meta property="og:type" content="album />
+    <meta property="og:type" content="album" />
     <meta property="og:url" content="https://hashtagtile.firebaseapp.com/" />
     <meta property="og:image" content="https://hashtagtile.firebaseapp.com/img/thumbnail.jpg" />
     <meta property="og:site_name" content="hashtagtile" />
@@ -34,7 +34,8 @@
     <div id="app">
         <div id="menu">
             <p id="menu_hashtag">#{{hashtag}}</p>
-            <p id="menu_info" class="btn" v-on:click="openItem"><img src="img/info.svg"></p>
+            <p id="menu_donation" v-on:click="openDonation" class="btn"><img src="/img/paypal-100x100.png" title="投げ銭" alt="投げ銭" /></p>
+            <p id="menu_info" v-on:click="openItem" class="btn"><img src="img/info.svg"></p>
         </div>    
         <div id="wrapper">
             <div id="columns">
@@ -49,7 +50,7 @@
             </div>
         </div>
         <div class="p-modal" :class="{'is-open': isModalInfo}">
-            <p><a href="https://ifttt.com" target="_blank">IFTTT</a> の Twitter と Webhooks を利用してハッシュタグ指定した画像一覧を取得します。</p>
+            <p><a href="https://ifttt.com" target="_blank">IFTTT</a> の Twitter と Webhooks を利用して 8ステップ で とても簡単にTwitter検索した一覧を作る事ができます！</p>
             <ol>
                 <li>IFTTT <a href="https://ifttt.com/create" target="_blank">New Applet</a> を選択</li>
                 <li>this に Twitter "New tweet from search" を設定</li>
@@ -57,9 +58,13 @@
                 <li>that に Webhooks "Make a web request" を設定</li>
                 <li>URLに hashtagtile サーバを設定 <br> https://hashtagtile.firebaseapp.com/api/tweet?hashtag=[タグ名] <br><textarea>https://hashtagtile.firebaseapp.com/api/tweet?hashtag=MA_2018</textarea></li>
                 <li>POST application/json を設定</li>
-                <li>Bodyには下記のJSONを設定<br><textarea>{{bosySample}}</textarea></li>
+                <li>Bodyには下記のJSONを設定<br><textarea>{{bodyJsonSample}}</textarea></li>
                 <li>タグ名パラメータを指定して hashtagtile にアクセス <br> 例) <a href="https://hashtagtile.firebaseapp.com/#MA_2018" target="_blank">https://hashtagtile.firebaseapp.com/#MA_2018</a></li>
             </ol>
+        </div>
+        <div id="modal-donation" class="p-modal" :class="{'is-open': isDonation}">
+            <p>便利だなって思ってくれた方は PayPal.Me から是非 寄付を。</p>
+            <p><a href="https://paypal.me/tfuru/300JPY">投げ銭[PayPal.Me]</a></p>
         </div>
     </div>
   </body>

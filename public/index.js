@@ -17,26 +17,40 @@ class App {
                 hashtag:"",
                 tweets:[],
                 isModalInfo: false,
-                bosySample:'{"UserName":"<<<{{UserName}}>>>","CreatedAt":"{{CreatedAt}}","UserImageUrl":"{{UserImageUrl}}","FirstLinkUrl":"{{FirstLinkUrl}}","LinkToTweet":"{{LinkToTweet}}"}'
+                isDonation: false,
+                bodyJsonSample:'{"UserName":"<<<{{UserName}}>>>","CreatedAt":"{{CreatedAt}}","UserImageUrl":"{{UserImageUrl}}","FirstLinkUrl":"{{FirstLinkUrl}}","LinkToTweet":"{{LinkToTweet}}"}'
             },
             methods: {
                 openItem() {
                     console.log("openItem");
-                    this.toggleModal();
+                    this.toggleIsModalInfo();
                 },
-                toggleModal() {
+                toggleIsModalInfo() {
                     this.isModalInfo = !this.isModalInfo;
-                }
+                },
+                openDonation(){
+                    console.log("openDonation");
+                    this.toggleIsDonation();
+                },
+                toggleIsDonation() {
+                    this.isDonation = !this.isDonation;
+                },
             }
         });
 
         //URLにつけたハッシュ・タグを取得する
         this.vueApp.hashtag = location.hash.replace("#","").trim();
+
+        //タイトル書き換え
+        document.title += " #"+this.vueApp.hashtag;
+        document.querySelector("meta[property='og:title']").setAttribute('content', document.title);
+        
+        var limitToLast = 200;
         console.log("onLoaded",this.vueApp.hashtag);
 
         //DB更新 イベントの読み取り
         let fnc =  this.onChildAdded.bind(this);
-        this.database.ref('/tweets/'+this.vueApp.hashtag).limitToLast(100).on('child_added', fnc);
+        this.database.ref('/tweets/'+this.vueApp.hashtag).limitToLast(limitToLast).on('child_added', fnc);
     };
 
     onChildAdded(snapshot){

@@ -14,10 +14,24 @@ body {
     height: 60px;    
 }
 
+#menu p{
+    position: absolute;
+}
+
 #menu_info{
     visibility: hidden;
-    position: absolute;
     right: 5%;
+    width: 40px;
+    height: 40px;
+}
+
+#menu_donation {
+    right: 10%;
+    height: 40px;
+}
+
+#menu_donation img{
+    display: inline-block;
     width: 40px;
     height: 40px;
 }
@@ -25,8 +39,6 @@ body {
 #menu_hashtag {
     position: absolute;
     left: 5%;
-    width: 40px;
-    height: 40px;
     font-size: 25px;
     font-weight: bold;
 }
@@ -130,4 +142,9 @@ body {
     visibility: visible;
     opacity: 1;
     z-index: 100;
+}
+
+#modal-donation p {
+    width: 100%;
+    text-align: center;
 }
