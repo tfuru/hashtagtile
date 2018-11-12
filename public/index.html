@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>hashtagtile</title>
+
+    <meta property="og:title" content="hashtagtile - ハッシュタグタイル -" />
+    <meta property="og:type" content="album />
+    <meta property="og:url" content="https://hashtagtile.firebaseapp.com/" />
+    <meta property="og:image" content="https://hashtagtile.firebaseapp.com/img/thumbnail.jpg" />
+    <meta property="og:site_name" content="hashtagtile" />
+    <meta property="og:description" content="IFTTT の設定をするだけで 検索ワードに関連した 画像一覧を作ってくれるサイト。" />
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
@@ -20,17 +27,39 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     
     <script defer src="index.js"></script>
+    <link rel="stylesheet" href="btn.css">    
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <div id="wrapper">
-        <div id="columns">
-            <div class="pin" v-for="(tweet, index) in tweets.slice().reverse()">
-                <img class="image" :src="tweet.ImageUrl"  />
-                <img class="icon" :src="tweet.UserImageUrl"  />
-                <p   class="user_name">{{tweet.UserName}}</p>
-                <p   class="created_at">{{tweet.CreatedAt}}</p>
+    <div id="app">
+        <div id="menu">
+            <p id="menu_hashtag">#{{hashtag}}</p>
+            <p id="menu_info" class="btn" v-on:click="openItem"><img src="img/info.svg"></p>
+        </div>    
+        <div id="wrapper">
+            <div id="columns">
+                <div class="pin" v-for="(tweet, index) in tweets.slice().reverse()">
+                    <a :href="tweet.LinkToTweet" target="_blank">
+                        <img class="image" :src="tweet.ImageUrl"  />
+                        <img class="icon" :src="tweet.UserImageUrl"  />
+                        <p   class="user_name">{{tweet.UserName}}</p>
+                        <p   class="created_at">{{tweet.CreatedAt}}</p>
+                    </a>
+                </div>
             </div>
+        </div>
+        <div class="p-modal" :class="{'is-open': isModalInfo}">
+            <p><a href="https://ifttt.com" target="_blank">IFTTT</a> の Twitter と Webhooks を利用してハッシュタグ指定した画像一覧を取得します。</p>
+            <ol>
+                <li>IFTTT <a href="https://ifttt.com/create" target="_blank">New Applet</a> を選択</li>
+                <li>this に Twitter "New tweet from search" を設定</li>
+                <li>検索したい条件を入力する <br><textarea>("#MA_2018" "#個人賞")</textarea></li>
+                <li>that に Webhooks "Make a web request" を設定</li>
+                <li>URLに hashtagtile サーバを設定 <br> https://hashtagtile.firebaseapp.com/api/tweet?hashtag=[タグ名] <br><textarea>https://hashtagtile.firebaseapp.com/api/tweet?hashtag=MA_2018</textarea></li>
+                <li>POST application/json を設定</li>
+                <li>Bodyには下記のJSONを設定<br><textarea>{{bosySample}}</textarea></li>
+                <li>タグ名パラメータを指定して hashtagtile にアクセス <br> 例) <a href="https://hashtagtile.firebaseapp.com/#MA_2018" target="_blank">https://hashtagtile.firebaseapp.com/#MA_2018</a></li>
+            </ol>
         </div>
     </div>
   </body>

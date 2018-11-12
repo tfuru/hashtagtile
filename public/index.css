@@ -1,22 +1,47 @@
 body {
     background: url(/scribble_light.png) ;
 }
- 
-#wrapper {
-    width: 90%;
-    /*
-    max-width: 1100px;
-    min-width: 800px;
-    */
-    margin: 50px auto;
+
+#app{
+    position: absolute;
 }
- 
+
+#menu,#wrapper{
+    width: 90%;
+}
+
+#menu{
+    height: 60px;    
+}
+
+#menu_info{
+    visibility: hidden;
+    position: absolute;
+    right: 5%;
+    width: 40px;
+    height: 40px;
+}
+
+#menu_hashtag {
+    position: absolute;
+    left: 5%;
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#wrapper {
+    margin: 50px auto;
+    margin-top: 5px;
+}
+
 #columns {
     -webkit-column-gap: 10px;
     -webkit-column-fill: auto;
     -moz-column-gap: 10px;
     -moz-column-fill: auto;
-    column-gap: 15px;
+    column-gap: 5px;
     column-fill: auto;
 
     -webkit-column-count: 2;
@@ -26,16 +51,14 @@ body {
  
 .pin {
     /*display: inline-block;*/
-    background: #FEFEFE;
+    /*background: #FEFEFE;*/
     border: 2px solid #FAFAFA;
     box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-    margin: 0 2px 15px;
+    margin: 2px;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
-    padding: 15px;
-    padding-bottom: 5px;
-    background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+    padding: 3px;
     opacity: 1;
      
     -webkit-transition: all .2s ease;
@@ -53,10 +76,6 @@ body {
 
 .pin .image {
     width: 100%;
-    /*border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
-    margin-bottom: 5px;
-    */
 }
  
 .pin .icon {
@@ -76,9 +95,39 @@ body {
 
 @media (min-width: 1100px) {
     /*　for PC　*/
+    #menu_info {
+        visibility: visible;
+    }
+
     #columns {
         -webkit-column-count: 3;
         -moz-column-count: 3;
         column-count: 3;
     }
+}
+
+.p-modal {
+    position: fixed;
+    overflow-y: auto;
+    top: 60px;
+    right: 120px;
+    width: 500px;
+    height: 400px;
+    border: 2px #333;
+    background-color: lightgray;
+    padding: 5px;
+
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+
+.p-modal textarea {
+    width: 90%;
+}
+
+.is-open {
+    visibility: visible;
+    opacity: 1;
+    z-index: 100;
 }

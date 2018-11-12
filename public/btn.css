@@ -1,0 +1,12 @@
+.btn {
+
+}
+
+.btn :hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.btn:before{
+
+}
